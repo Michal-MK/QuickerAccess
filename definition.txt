@@ -1,0 +1,12 @@
+﻿# Folder Openners 'shortcut' |'fullpath'
+OFO: D		|C:\Users\Michal-MK\Desktop
+OFO: muni	|C:\Users\Michal-MK\Desktop\MUNI
+OFO: py		|D:\Python\Projects
+
+# File Openners 'shortcut' |'fullpath'
+OFI: sts	|D:\Slay the Spire\SlayTheSpire.exe
+OFI: putty	|D:\Putty\putty.exe
+
+# Clipboard
+CLP: llvm	|module add llvm-5.0.0
+CLP: build	|clang++
