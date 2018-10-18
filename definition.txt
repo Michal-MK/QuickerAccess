@@ -1,12 +1,18 @@
-﻿# Folder Openners 'shortcut' |'fullpath'
+﻿# Window open command: 'main_key' [optional]modifier_1 [optional]modifier_2
+# main_key has to be one of https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.keys
+# Supported modifier keys = 'Shift', 'Control', 'Alt'
+EXP:F Alt
+
+# Folder Openners 'shortcut' |'fullpath', whitespace before '|' is ignored
 OFO: D		|C:\Users\Michal-MK\Desktop
 OFO: muni	|C:\Users\Michal-MK\Desktop\MUNI
 OFO: py		|D:\Python\Projects
+OFO: appd	|C:\Users\Michal-MK\AppData
 
-# File Openners 'shortcut' |'fullpath'
+# File Openners 'shortcut' |'fullpath', whitespace before '|' is ignored
 OFI: sts	|D:\Slay the Spire\SlayTheSpire.exe
 OFI: putty	|D:\Putty\putty.exe
 
-# Clipboard
+# Clipboard, whitespace before '|' is ignored
 CLP: llvm	|module add llvm-5.0.0
 CLP: build	|clang++

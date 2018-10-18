@@ -1,9 +1,7 @@
 ﻿<Application x:Class="QuickerAccess.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:QuickerAccess"
-             >
-    <Application.Resources>
-		<!-- StartupUri="MainWindow.xaml"-->
-    </Application.Resources>
+             xmlns:local="clr-namespace:QuickerAccess">
+	<Application.Resources>
+	</Application.Resources>
 </Application>

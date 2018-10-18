@@ -4,18 +4,18 @@ using System.Windows.Forms;
 namespace QuickerAccess {
 	class HotkeyMapper {
 
-		private MainWindow windowReference;
-		private int escapeID;
-		private int enterID;
-		private int activationID;
+		private MainWindow _windowReference;
+		private int _escapeID;
+		private int _enterID;
+		private int _activationID;
 
-		private readonly Keys mainKey;
-		private readonly KeyModifiers modifierKey;
+		private readonly Keys _mainKey;
+		private readonly KeyModifiers _modifierKey;
 
 		public HotkeyMapper(Keys mainKey, KeyModifiers modifierKey) {
-			this.mainKey = mainKey;
-			this.modifierKey = modifierKey;
-			activationID = HotKeyManager.RegisterHotKey(mainKey, modifierKey);
+			_mainKey = mainKey;
+			_modifierKey = modifierKey;
+			_activationID = HotKeyManager.RegisterHotKey(mainKey, modifierKey);
 			HotKeyManager.HotKeyPressed += HotKeyManager_HotKeyPressed;
 		}
 
@@ -39,25 +39,25 @@ namespace QuickerAccess {
 		}
 
 		private void HideAndUnreg() {
-			HotKeyManager.UnregisterHotKey(escapeID);
-			HotKeyManager.UnregisterHotKey(enterID);
-			App.Current.Dispatcher.Invoke(() => windowReference.Hide());
-			activationID = HotKeyManager.RegisterHotKey(mainKey, modifierKey);
+			HotKeyManager.UnregisterHotKey(_escapeID);
+			HotKeyManager.UnregisterHotKey(_enterID);
+			App.Current.Dispatcher.Invoke(() => _windowReference.Hide());
+			_activationID = HotKeyManager.RegisterHotKey(_mainKey, _modifierKey);
 		}
 
 		private void Activate() {
-			windowReference.Show();
-			windowReference.Activate();
-			windowReference.MAIN_Command.Focus();
+			_windowReference.Show();
+			_windowReference.Activate();
+			_windowReference.MAIN_Command.Focus();
 		}
 
 		private void ShowAndReg() {
-			escapeID = HotKeyManager.RegisterHotKey(Keys.Escape, KeyModifiers.None);
-			enterID = HotKeyManager.RegisterHotKey(Keys.Enter, KeyModifiers.None);
-			HotKeyManager.UnregisterHotKey(activationID);
-			if (windowReference == null) {
+			_escapeID = HotKeyManager.RegisterHotKey(Keys.Escape, KeyModifiers.None);
+			_enterID = HotKeyManager.RegisterHotKey(Keys.Enter, KeyModifiers.None);
+			HotKeyManager.UnregisterHotKey(_activationID);
+			if (_windowReference == null) {
 				App.Current.Dispatcher.Invoke(() => {
-					System.Windows.Application.Current.MainWindow = windowReference = new MainWindow();
+					System.Windows.Application.Current.MainWindow = _windowReference = new MainWindow();
 					Activate();
 				});
 			}

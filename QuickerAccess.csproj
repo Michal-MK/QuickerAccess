@@ -68,6 +68,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AppHelper.cs" />
     <Compile Include="CommandManager.cs" />
     <Compile Include="CommandParser.cs" />
     <Compile Include="CommandType.cs" />
@@ -111,7 +112,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Test.ico" />
+    <Resource Include="Resources\TrayIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
