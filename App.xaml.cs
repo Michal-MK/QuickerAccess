@@ -1,15 +1,27 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
-using System.Windows.Media.Imaging;
 
 namespace QuickerAccess {
 	/// <summary>
-	/// Interaction logic for App.xaml
+	/// Main class, instantiates all sub controls, registers <see cref="HotKeyMapper"/> for dialog opening and creates <see cref="Tray"/>
 	/// </summary>
 	public partial class App : System.Windows.Application {
-		internal static HotkeyMapper mapper;
+
+		/// <summary>
+		/// Reference to global hotkey mapper
+		/// </summary>
+		internal static HotKeyMapper mapper;
+
+		/// <summary>
+		/// Reference to parser of entered command, carries out response
+		/// </summary>
 		internal static CommandManager manager;
+
+		/// <summary>
+		/// Reference to tray manager
+		/// </summary>
+		internal static Tray tray;
 
 		public App() {
 			try {
@@ -35,7 +47,7 @@ namespace QuickerAccess {
 						if (!Enum.TryParse(split[2], out opt2))
 							throw new ArgumentException();
 					}
-					mapper = new HotkeyMapper(mainKey, opt1 | opt2);
+					mapper = new HotKeyMapper(mainKey, opt1 | opt2);
 				}
 			}
 			catch (IOException) {
@@ -43,7 +55,7 @@ namespace QuickerAccess {
 				Environment.Exit(-1);
 			}
 			catch (ArgumentException) {
-				MessageBox.Show("Invalid content in 'definition.txt', fix it or redownload it.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show("Invalid content in 'definition.txt', fix it or re-download it.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				Environment.Exit(-1);
 			}
 			catch (IndexOutOfRangeException) {
@@ -51,10 +63,7 @@ namespace QuickerAccess {
 				Environment.Exit(-1);
 			}
 			manager = new CommandManager();
-			Hardcodet.Wpf.TaskbarNotification.TaskbarIcon t = new Hardcodet.Wpf.TaskbarNotification.TaskbarIcon {
-				IconSource = new BitmapImage(new Uri(AppHelper.resourcesPath + "TrayIcon.ico"))
-			};
-			t.TrayLeftMouseDown += mapper.Tray;
+			tray = new Tray();
 		}
 	}
 }

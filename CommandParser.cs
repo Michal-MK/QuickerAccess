@@ -6,8 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace QuickerAccess {
+
+	/// <summary>
+	/// Helper function to parse text from 'definition.txt' file
+	/// </summary>
 	static class CommandParser {
 
+		/// <summary>
+		/// Parses the file into 'manager'
+		/// </summary>
 		internal static void Parse(CommandManager manager) {
 			string[] lines = File.ReadAllLines("definition.txt");
 
@@ -43,6 +50,9 @@ namespace QuickerAccess {
 			}
 		}
 
+		/// <summary>
+		/// Looks at the beginning of a string and decides what type of the command it is
+		/// </summary>
 		private static CommandType GetCommandType(ref string s) {
 			if (s.Contains("OFO:")) {
 				s = s.Replace("OFO:", "");

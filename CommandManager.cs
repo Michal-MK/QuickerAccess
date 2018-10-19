@@ -3,13 +3,31 @@ using System.Diagnostics;
 using System.Windows;
 
 namespace QuickerAccess {
+	/// <summary>
+	/// Parses entered string from the dialog, responds to the command
+	/// </summary>
 	class CommandManager {
+
+		/// <summary>
+		/// Holds all folder opening commands
+		/// </summary>
 		internal Dictionary<string, string> directoryOpenners = new Dictionary<string, string>();
+
+		/// <summary>
+		/// Holds all file opening commands
+		/// </summary>
 		internal Dictionary<string, string> fileOpenners =		new Dictionary<string, string>();
+
+		/// <summary>
+		/// Holds all string to replace clipboard with.
+		/// </summary>
 		internal Dictionary<string, string> clipboardSwapper =	new Dictionary<string, string>();
 
-		internal string clipboardHistory;
+		internal string _previousClipboardContent;
 
+		/// <summary>
+		/// Default constructor, parses 'definition.txt' file
+		/// </summary>
 		public CommandManager() {
 			CommandParser.Parse(this);
 		}
@@ -30,7 +48,7 @@ namespace QuickerAccess {
 					break;
 				}
 				case CommandType.ClipboardSwapper: {
-					clipboardHistory = Clipboard.GetText();
+					_previousClipboardContent = Clipboard.GetText();
 					Clipboard.SetText(clipboardSwapper[command]);
 					break;
 				}
@@ -54,7 +72,7 @@ namespace QuickerAccess {
 		}
 
 		/// <summary>
-		/// Run default process, that uses default app to process argument
+		/// Run default process, that uses default application to process argument
 		/// </summary>
 		internal void RunDefaultProcess(string command) {
 			new Process {

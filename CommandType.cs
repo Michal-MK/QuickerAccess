@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace QuickerAccess {
 
-namespace QuickerAccess {
+	/// <summary>
+	/// Type of parse-able commands
+	/// </summary>
 	enum CommandType {
 		None,
 		FolderOpenner,

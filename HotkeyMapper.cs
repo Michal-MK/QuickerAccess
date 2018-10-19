@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 
 namespace QuickerAccess {
-	class HotkeyMapper {
+	class HotKeyMapper {
 
 		private MainWindow _windowReference;
 		private int _escapeID;
@@ -12,7 +12,10 @@ namespace QuickerAccess {
 		private readonly Keys _mainKey;
 		private readonly KeyModifiers _modifierKey;
 
-		public HotkeyMapper(Keys mainKey, KeyModifiers modifierKey) {
+		/// <summary>
+		/// Default Constructor, assigns the parsed shortcut from 'definition.txt'
+		/// </summary>
+		public HotKeyMapper(Keys mainKey, KeyModifiers modifierKey) {
 			_mainKey = mainKey;
 			_modifierKey = modifierKey;
 			_activationID = HotKeyManager.RegisterHotKey(mainKey, modifierKey);
