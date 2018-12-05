@@ -54,28 +54,38 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsInput, Version=1.0.6.0, Culture=neutral, PublicKeyToken=de2685b4776e9c2e, processorArchitecture=MSIL">
+      <HintPath>packages\InputSimulatorPlus.1.0.7\lib\net20\WindowsInput.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <ApplicationDefinition Include="Config\App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="HotKeyMapper.cs" />
+    <Compile Include="Commands\Base\HotkeyCommand.cs" />
+    <Compile Include="Commands\Base\ICommand.cs" />
+    <Compile Include="Commands\Base\TextCommand.cs" />
+    <Compile Include="Commands\LangFixer.cs" />
+    <Compile Include="Commands\MainWindowOpen.cs" />
+    <Compile Include="Commands\OpenFileCommand.cs" />
+    <Compile Include="Commands\OpenFolderCommand.cs" />
+    <Compile Include="Enums\CommandType.cs" />
     <Compile Include="Tray.cs" />
-    <Page Include="MainWindow.xaml">
+    <Page Include="XAML\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="App.xaml.cs">
+    <Compile Include="Config\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AppHelper.cs" />
     <Compile Include="CommandManager.cs" />
     <Compile Include="CommandParser.cs" />
-    <Compile Include="CommandType.cs" />
+    <Compile Include="Enums\CommandCategory.cs" />
     <Compile Include="HotKeyManager.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="XAML\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -98,14 +108,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
+    <None Include="Config\packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="Config\App.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="definition.txt">

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Windows;
+using System.Windows.Forms;
 
 namespace QuickerAccess {
 	/// <summary>
@@ -8,73 +8,51 @@ namespace QuickerAccess {
 	/// </summary>
 	class CommandManager {
 
-		/// <summary>
-		/// Holds all folder opening commands
-		/// </summary>
-		internal Dictionary<string, string> directoryOpenners = new Dictionary<string, string>();
-
-		/// <summary>
-		/// Holds all file opening commands
-		/// </summary>
-		internal Dictionary<string, string> fileOpenners =		new Dictionary<string, string>();
-
-		/// <summary>
-		/// Holds all string to replace clipboard with.
-		/// </summary>
-		internal Dictionary<string, string> clipboardSwapper =	new Dictionary<string, string>();
-
-		internal string _previousClipboardContent;
-
+		List<ICommand> commands = new List<ICommand>();
 		/// <summary>
 		/// Default constructor, parses 'definition.txt' file
 		/// </summary>
 		public CommandManager() {
-			CommandParser.Parse(this);
+			commands = CommandParser.Parse(this);
+			foreach (ICommand command in commands) {
+				if (command is HotkeyCommand)
+					HotKeyManager.RegisterHotKey((command as HotkeyCommand).mainKey, (command as HotkeyCommand).modifiers);
+			}
 		}
 
 		/// <summary>
 		/// Handle Command according to its type
 		/// </summary>
-		public void HandleCommand(string command) {
-			CommandType type = GetCommandType(command);
-
-			switch (type) {
-				case CommandType.FileOpenner: {
-					RunDefaultProcess(fileOpenners[command]);
-					break;
-				}
-				case CommandType.FolderOpenner: {
-					RunDefaultProcess(directoryOpenners[command]);
-					break;
-				}
-				case CommandType.ClipboardSwapper: {
-					_previousClipboardContent = Clipboard.GetText();
-					Clipboard.SetText(clipboardSwapper[command]);
-					break;
+		public void HandleCommand(string commandStr) {
+			foreach (ICommand command in commands) {
+				if (command is TextCommand) {
+					if ((command as TextCommand).textTrigger == commandStr) {
+						command.Execute();
+						return;
+					}
 				}
 			}
 		}
-
+		
 		/// <summary>
-		/// Get command type from a command string
+		/// Handle Command according to its type
 		/// </summary>
-		internal CommandType GetCommandType(string command) {
-			if (directoryOpenners.ContainsKey(command)) {
-				return CommandType.FolderOpenner;
+		public void HandleCommand(Keys key, KeyModifiers modifiers) {
+			foreach (ICommand command in commands) {
+				if (command is HotkeyCommand) {
+					if ((command as HotkeyCommand).mainKey == key && (command as HotkeyCommand).modifiers == modifiers) {
+						command.Execute();
+						return;
+					}
+				}
 			}
-			if(fileOpenners.ContainsKey(command)) {
-				return CommandType.FileOpenner;
-			}
-			if (clipboardSwapper.ContainsKey(command)) {
-				return CommandType.ClipboardSwapper;
-			}
-			return CommandType.None;
 		}
+
 
 		/// <summary>
 		/// Run default process, that uses default application to process argument
 		/// </summary>
-		internal void RunDefaultProcess(string command) {
+		internal static void RunDefaultProcess(string command) {
 			new Process {
 				StartInfo = new ProcessStartInfo(command)
 			}.Start();

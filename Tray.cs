@@ -19,10 +19,11 @@ namespace QuickerAccess {
 		public Tray() {
 			icon = new TaskbarIcon {
 				IconSource = new BitmapImage(new Uri(AppHelper.resourcesPath + "TrayIcon.ico")),
-				ContextMenu = new ContextMenu()
+				ContextMenu = new ContextMenu(),
+				ToolTip = "Quicker Access >>>"
 			};
 
-			icon.TrayLeftMouseDown += App.mapper.Tray;
+			icon.TrayLeftMouseDown += App.main.Tray;
 
 			MenuItem openItem = new MenuItem {
 				Header = "Open Input",
@@ -39,7 +40,7 @@ namespace QuickerAccess {
 		}
 
 		private void OpenItem_Click(object sender, RoutedEventArgs e) {
-			App.mapper.Tray(sender, e);
+			App.main.Tray(sender, e);
 		}
 
 		private void QuitItem_Click(object sender, RoutedEventArgs e) {

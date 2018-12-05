@@ -32,6 +32,7 @@ namespace QuickerAccess {
 			});
 			messageLoop.Name = "MessageLoopThread";
 			messageLoop.IsBackground = true;
+			messageLoop.SetApartmentState(ApartmentState.STA);
 			messageLoop.Start();
 		}
 

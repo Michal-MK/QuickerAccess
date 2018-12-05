@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 
 namespace QuickerAccess {
 
@@ -12,61 +10,38 @@ namespace QuickerAccess {
 	/// </summary>
 	static class CommandParser {
 
+		internal static readonly Dictionary<string,string> knownKeys = new Dictionary<string, string> {
+			{ "MAIN", nameof(QuickerAccess) +"."+  nameof(MainWindowOpen) }, //Command to open the window for typing commands
+			{ "CZEN", nameof(QuickerAccess) +"."+  nameof(LangFixer) },//Command to replace highlighted text with correct one in the other language
+			{ "OFO", nameof(QuickerAccess) +"."+ nameof(OpenFolderCommand) },//Open folder
+			{ "OFI", nameof(QuickerAccess) +"."+ nameof(OpenFileCommand)},//Open file
+			{ "CLP", null},//Modify clipboard
+		};
+
 		/// <summary>
 		/// Parses the file into 'manager'
 		/// </summary>
-		internal static void Parse(CommandManager manager) {
+		internal static List<ICommand> Parse(CommandManager manager) {
 			string[] lines = File.ReadAllLines("definition.txt");
+			lines = lines.SelectiveRemove((string s) => s.StartsWith("#") || string.IsNullOrWhiteSpace(s));
+			Assembly a = Assembly.GetCallingAssembly();
+
+			List<ICommand> commads = new List<ICommand>();
 
 			for (int i = 0; i < lines.Length; i++) {
-				if (string.IsNullOrEmpty(lines[i])) {
-					continue;
-				}
-
-				string s = lines[i];
-				CommandType type = GetCommandType(ref s);
-
-				if(type == CommandType.None) {
-					continue;
-				}
-
-				switch (type) {
-					case CommandType.FolderOpenner: {
-						int pipeIndex = s.IndexOf('|');
-						manager.directoryOpenners.Add(s.Substring(0, pipeIndex).Trim(), s.Substring(pipeIndex + 1).Trim());
+				string[] s = lines[i].Split('|');
+				switch (s[0]) {
+					case "K": {
+						commads.Add((Activator.CreateInstance(a.GetType(knownKeys[s[1]])) as TextCommand).Parse(s));
 						break;
 					}
-					case CommandType.FileOpenner: {
-						int pipeIndex = s.IndexOf('|');
-						manager.fileOpenners.Add(s.Substring(0, pipeIndex).Trim(), s.Substring(pipeIndex + 1).Trim());
-						break;
-					}
-					case CommandType.ClipboardSwapper: {
-						int pipeIndex = s.IndexOf('|');
-						manager.clipboardSwapper.Add(s.Substring(0, pipeIndex).Trim(), s.Substring(pipeIndex + 1).Trim());
+					case "H": {
+						commads.Add((Activator.CreateInstance(a.GetType(knownKeys[s[1]])) as HotkeyCommand).Parse(s));
 						break;
 					}
 				}
 			}
-		}
-
-		/// <summary>
-		/// Looks at the beginning of a string and decides what type of the command it is
-		/// </summary>
-		private static CommandType GetCommandType(ref string s) {
-			if (s.Contains("OFO:")) {
-				s = s.Replace("OFO:", "");
-				return CommandType.FolderOpenner;
-			}
-			else if (s.Contains("OFI:")) {
-				s = s.Replace("OFI:", "");
-				return CommandType.FileOpenner;
-			}
-			else if (s.Contains("CLP:")) {
-				s = s.Replace("CLP:", "");
-				return CommandType.ClipboardSwapper;
-			}
-			return 0;
+			return commads;
 		}
 	}
 }

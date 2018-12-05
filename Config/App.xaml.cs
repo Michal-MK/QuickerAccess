@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace QuickerAccess {
 	/// <summary>
@@ -9,9 +10,9 @@ namespace QuickerAccess {
 	public partial class App : System.Windows.Application {
 
 		/// <summary>
-		/// Reference to global hotkey mapper
+		/// Reference to global hot-key mapper
 		/// </summary>
-		internal static HotKeyMapper mapper;
+		internal static MainWindowOpen main;
 
 		/// <summary>
 		/// Reference to parser of entered command, carries out response
@@ -23,32 +24,11 @@ namespace QuickerAccess {
 		/// </summary>
 		internal static Tray tray;
 
+		internal static int currentKeyboardLayoutID;
+
 		public App() {
 			try {
-				using (StreamReader sr = new StreamReader("definition.txt")) {
-					string line = sr.ReadLine();
-					while (!line.StartsWith("EXP:")) {
-						line = sr.ReadLine();
-					}
-
-					string[] split = line.Substring(line.IndexOf(':') + 1).Split();
-
-					if (!Enum.TryParse(split[0], out Keys mainKey)) {
-						throw new ArgumentException();
-					}
-					KeyModifiers opt1 = KeyModifiers.None;
-					KeyModifiers opt2 = KeyModifiers.None;
-
-					if (split.Length == 2) {
-						if (!Enum.TryParse(split[1], out opt1))
-							throw new ArgumentException();
-					}
-					else if (split.Length == 3) {
-						if (!Enum.TryParse(split[2], out opt2))
-							throw new ArgumentException();
-					}
-					mapper = new HotKeyMapper(mainKey, opt1 | opt2);
-				}
+				using (StreamReader sr = new StreamReader("definition.txt")) { }
 			}
 			catch (IOException) {
 				MessageBox.Show("Unable to locate or access 'definition.txt' in programs directory!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

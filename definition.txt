@@ -1,17 +1,19 @@
 ﻿# Window open command: 'main_key' [optional]modifier_1 [optional]modifier_2
 # main_key has to be one of https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.keys
 # Supported modifier keys = 'Shift', 'Control', 'Alt'
-EXP:F Alt
+H|MAIN|F Alt
+H|CZEN| F2 Control 
+
 
 # Folder Openers 'shortcut' |'full path', whitespace before '|' is ignored
-OFO: D		|C:\Users\Michal-MK\Desktop
-OFO: muni	|C:\Users\Michal-MK\Desktop\MUNI
-OFO: py		|D:\Python\Projects
-OFO: appd	|C:\Users\Michal-MK\AppData
+K|OFO| D		|C:\Users\Michal-MK\Desktop
+K|OFO| muni	|C:\Users\Michal-MK\Desktop\MUNI
+K|OFO| py		|D:\Python\Projects
+K|OFO| appd	|C:\Users\Michal-MK\AppData
 
 # File Openers 'shortcut' |'fullpath', whitespace before '|' is ignored
-OFI: sts	|D:\Slay the Spire\SlayTheSpire.exe
-OFI: putty	|D:\Putty\putty.exe
+K|OFI| sts	|I:\Slay the Spire\SlayTheSpire.exe
+K|OFI| putty	|D:\Putty\putty.exe
 
 # Clipboard, whitespace before '|' is ignored
-CLP: llvm	|module add llvm-5.0.0
+# K|CLP| llvm	|module add llvm-5.0.0
