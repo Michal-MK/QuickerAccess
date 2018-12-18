@@ -66,6 +66,8 @@
     <Compile Include="Commands\Base\HotkeyCommand.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
     <Compile Include="Commands\Base\TextCommand.cs" />
+    <Compile Include="Commands\ClipboardModifier.cs" />
+    <Compile Include="Commands\ExitApplication.cs" />
     <Compile Include="Commands\LangFixer.cs" />
     <Compile Include="Commands\MainWindowOpen.cs" />
     <Compile Include="Commands\OpenFileCommand.cs" />

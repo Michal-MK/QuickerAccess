@@ -41,6 +41,10 @@ namespace QuickerAccess {
 		}
 
 		public override ICommand Parse(string[] splitLine) {
+			// [0] is the base type ID
+			// [1] is this classes Type
+			// [2] is the key combination
+
 			string[] split = splitLine[2].Trim().Split();
 			foreach (string s in split) {
 				if (Enum.TryParse(s, out KeyModifiers mods)) {

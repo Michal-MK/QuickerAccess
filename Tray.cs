@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -44,7 +45,12 @@ namespace QuickerAccess {
 		}
 
 		private void QuitItem_Click(object sender, RoutedEventArgs e) {
-			Environment.Exit(0);
+			App.ExitApp();
+		}
+
+		internal void DisposeTaskBar() {
+			icon.IconSource = null;
+			icon.Visibility = Visibility.Collapsed;
 		}
 	}
 }

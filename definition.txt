@@ -1,19 +1,25 @@
 ﻿# Window open command: 'main_key' [optional]modifier_1 [optional]modifier_2
 # main_key has to be one of https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.keys
 # Supported modifier keys = 'Shift', 'Control', 'Alt'
-H|MAIN|F Alt
+# To insert a 'pipe'(|) symbol you can use  'Alt + 124'
+H|MAIN| F Alt
+
+# Hotkey to replace selection with modified string of the same content
+# except all conflicting characters are converted to CES language layout equivalent
 H|CZEN| F2 Control 
 
+# Exit the application, takes no parameters
+K|EXIT| exit
 
 # Folder Openers 'shortcut' |'full path', whitespace before '|' is ignored
 K|OFO| D		|C:\Users\Michal-MK\Desktop
-K|OFO| muni	|C:\Users\Michal-MK\Desktop\MUNI
+K|OFO| muni		|C:\Users\Michal-MK\Desktop\MUNI
 K|OFO| py		|D:\Python\Projects
-K|OFO| appd	|C:\Users\Michal-MK\AppData
+K|OFO| appd		|C:\Users\Michal-MK\AppData
 
 # File Openers 'shortcut' |'fullpath', whitespace before '|' is ignored
-K|OFI| sts	|I:\Slay the Spire\SlayTheSpire.exe
+K|OFI| sts		|I:\Slay the Spire\SlayTheSpire.exe
 K|OFI| putty	|D:\Putty\putty.exe
 
 # Clipboard, whitespace before '|' is ignored
-# K|CLP| llvm	|module add llvm-5.0.0
+K|CLP| llvm		|module add llvm-5.0.0

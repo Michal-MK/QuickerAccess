@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 
@@ -24,8 +25,6 @@ namespace QuickerAccess {
 		/// </summary>
 		internal static Tray tray;
 
-		internal static int currentKeyboardLayoutID;
-
 		public App() {
 			try {
 				using (StreamReader sr = new StreamReader("definition.txt")) { }
@@ -44,6 +43,13 @@ namespace QuickerAccess {
 			}
 			manager = new CommandManager();
 			tray = new Tray();
+		}
+
+		public static void ExitApp() {
+			Current.Dispatcher.Invoke(() => {
+				tray.DisposeTaskBar();
+				Task.Run(() => { Environment.Exit(0); });
+			});
 		}
 	}
 }

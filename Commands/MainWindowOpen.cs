@@ -24,8 +24,8 @@ namespace QuickerAccess {
 		}
 
 		public override ICommand Parse(string[] splitLine) {
-			// [0] Category identifier
-			// [1] This
+			// [0] is the base type ID
+			// [1] is this classes Type
 			// [2] Key combinations
 
 			string[] split = splitLine[2].Split();
@@ -81,8 +81,8 @@ namespace QuickerAccess {
 			else if (e.Key == Keys.Enter) {
 				string command = App.Current.Dispatcher.Invoke(() => ((MainWindow)App.Current.MainWindow).MAIN_Command.Text);
 
-				App.manager.HandleCommand(command);
 				HideAndUnreg();
+				App.manager.HandleCommand(command);
 				return;
 			}
 			if (e.Key == mainKey && e.Modifiers == modifiers) {

@@ -12,10 +12,11 @@ namespace QuickerAccess {
 
 		internal static readonly Dictionary<string,string> knownKeys = new Dictionary<string, string> {
 			{ "MAIN", nameof(QuickerAccess) +"."+  nameof(MainWindowOpen) }, //Command to open the window for typing commands
+			{ "EXIT", nameof(QuickerAccess) +"."+  nameof(ExitApplication) }, //Command to open the window for typing commands
 			{ "CZEN", nameof(QuickerAccess) +"."+  nameof(LangFixer) },//Command to replace highlighted text with correct one in the other language
 			{ "OFO", nameof(QuickerAccess) +"."+ nameof(OpenFolderCommand) },//Open folder
-			{ "OFI", nameof(QuickerAccess) +"."+ nameof(OpenFileCommand)},//Open file
-			{ "CLP", null},//Modify clipboard
+			{ "OFI", nameof(QuickerAccess) +"."+ nameof(OpenFileCommand) },//Open file
+			{ "CLP", nameof(QuickerAccess) +"."+ nameof(ClipboardModifier) },//Modify clipboard
 		};
 
 		/// <summary>
